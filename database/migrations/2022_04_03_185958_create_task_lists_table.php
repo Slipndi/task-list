@@ -20,8 +20,8 @@ return new class extends Migration
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-                
             $table->boolean('is_active');
+            $table->timestamps();
         });
     }
 

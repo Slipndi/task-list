@@ -21,6 +21,7 @@ return new class extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->boolean('is_done');
+            $table->timestamps();
         });
     }
 
