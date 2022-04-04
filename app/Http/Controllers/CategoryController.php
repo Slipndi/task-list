@@ -80,6 +80,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        Category::destroy($category);
+        return Response(null, Response::HTTP_OK);
     }
 }

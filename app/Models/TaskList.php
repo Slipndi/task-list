@@ -11,6 +11,11 @@ class TaskList extends Model
 {
     use HasFactory;
 
+    /**
+     * Fillable variable in mass assignement
+     *
+     * @var array
+     */
     protected $fillable = [
         'title', 
         'category_id',

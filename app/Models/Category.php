@@ -10,6 +10,11 @@ class Category extends Model
 {
     use HasFactory;
 
+    /**
+     * Fillable variable in mass assignement
+     *
+     * @var array
+     */
     protected $fillable = [
         'title', 
         'color'
