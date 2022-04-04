@@ -19,7 +19,7 @@ class TaskListFactory extends Factory
     {
         return [
             'title'=>$this->faker->sentence(),
-            'category_id'=>Category::inRandomOrder()->first()->id(),
+            'category_id'=>Category::inRandomOrder()->first()->id,
             'is_active'=>true
         ];
     }
