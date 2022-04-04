@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Task extends Model
 {
@@ -14,4 +15,13 @@ class Task extends Model
         'task_lists_id',
         'is_done'
     ];
+
+    /**
+     * One to many relationship with tasklist
+     *
+     * @return HasOne
+     */
+    public function taskList() : HasOne {
+        return $this->hasOne(TaskList::class);
+    }
 }

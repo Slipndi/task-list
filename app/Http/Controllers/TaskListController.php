@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\TaskList;
-use Illuminate\Http\Request;
+use Illuminate\Http\{Request,Response};
 
 class TaskListController extends Controller
 {
@@ -14,7 +14,7 @@ class TaskListController extends Controller
      */
     public function index()
     {
-        //
+        return Response(TaskList::all()->jsonSerialize(), Response::HTTP_OK);
     }
 
     /**

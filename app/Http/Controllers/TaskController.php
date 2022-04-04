@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class TaskController extends Controller
 {
@@ -14,7 +15,6 @@ class TaskController extends Controller
      */
     public function index()
     {
-        //
     }
 
     /**
