@@ -27,6 +27,6 @@ class Task extends Model
      * @return HasOne
      */
     public function taskList() : HasOne {
-        return $this->hasOne(TaskList::class);
+        return $this->hasOne(TaskList::class, 'id', 'task_lists_id');
     }
 }

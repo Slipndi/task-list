@@ -14,7 +14,13 @@ class TaskListController extends Controller
      */
     public function index()
     {
-        return Response(TaskList::all()->jsonSerialize(), Response::HTTP_OK);
+        return Response(
+            TaskList::with('category')
+                ->with('tasks')
+                ->get()
+                ->jsonSerialize(), 
+                Response::HTTP_OK)
+            ;
     }
 
     /**
