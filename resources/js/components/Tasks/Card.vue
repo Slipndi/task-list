@@ -8,23 +8,36 @@
             </h2>
             <PercentageBar :tasks="tasks" />
         </div>
-        <ul class="inline-block content mt-2 w-full" v-show="isVisible">
+        <div v-show="isVisible" class="relative">
+        <ul class="inline-block content mt-2 w-full">
             <Task v-for="task in tasks" :key="task.id" :taskData="task" />
         </ul>
+        </div>
     </div>
 </template>
 
 <script>
 export default {
-    props: {
-        title: String,
-        category: Object,
-        tasks : Object,
-    },
+    props: [
+        'title',
+        'category',
+        'taskListId'
+    ],
     data() {
         return {
             categoryColor : this.category.color,
             isVisible : false,
+            tasks:[],
+        }
+    },
+    mounted() {
+        this.getTasks();
+    }
+    ,
+    methods :{
+        getTasks(){
+            axios.get(`tasks/${this.taskListId}`)
+                .then(response => this.tasks = response.data)
         }
     }
 };
@@ -38,6 +51,16 @@ export default {
 }
 </style>
 <style scoped>
+.add {
+    cursor: pointer;
+    bottom:-30%;
+    right:50%;
+    position:absolute;
+
+}
+.add:hover{
+    color:green;
+}
 h2 {
     font-weight: 900;
     font-size: 20px;

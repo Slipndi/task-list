@@ -16,7 +16,6 @@ class TaskListController extends Controller
     {
         return Response(
             TaskList::with('category')
-                ->with('tasks')
                 ->get()
                 ->jsonSerialize(), 
                 Response::HTTP_OK)

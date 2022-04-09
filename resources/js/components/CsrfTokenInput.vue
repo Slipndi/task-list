@@ -15,7 +15,7 @@ export default {
                 ? document.head.querySelector('meta[name="csrf-token"]').textContent
                 : '',
         }
-    },
+    }
 }
 </script>
 

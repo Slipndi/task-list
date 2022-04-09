@@ -5,7 +5,7 @@
             :key="tasklist.id" 
             :title="tasklist.title"
             :category="tasklist.category"
-            :tasks="tasklist.tasks"
+            :taskListId="tasklist.id"
         />
     </div>
 </template>
