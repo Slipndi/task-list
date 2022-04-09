@@ -30,7 +30,7 @@ export default {
             tasks:[],
         }
     },
-    mounted() {
+    beforeMount() {
         this.getTasks();
     }
     ,

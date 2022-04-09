@@ -46,11 +46,12 @@ export default {
                 'title': this.title,
                 'is_done':this.isDone
             })
+            this.$parent.getTasks();
         },
 
         deleteTask(){
             axios.delete(`tasks/${this.id}`);
-            this.$forceUpdate();
+            this.$parent.getTasks();
         },
     }
 }

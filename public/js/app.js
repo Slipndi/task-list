@@ -19446,7 +19446,7 @@ var __default__ = {
       tasks: []
     };
   },
-  mounted: function mounted() {
+  beforeMount: function beforeMount() {
     this.getTasks();
   },
   methods: {
@@ -19529,10 +19529,11 @@ __webpack_require__.r(__webpack_exports__);
         'title': this.title,
         'is_done': this.isDone
       });
+      this.$parent.getTasks();
     },
     deleteTask: function deleteTask() {
       axios["delete"]("tasks/".concat(this.id));
-      this.$forceUpdate();
+      this.$parent.getTasks();
     }
   }
 });
