@@ -8,8 +8,7 @@
 export default {
     props: ['tasks'],
     created() {
-        this.updatePercentage()
-        console.log(this.tasks);
+        this.updatePercentage();
     },
     data() {
         return {

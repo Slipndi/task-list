@@ -19496,7 +19496,6 @@ __webpack_require__.r(__webpack_exports__);
   props: ['tasks'],
   created: function created() {
     this.updatePercentage();
-    console.log(this.tasks);
   },
   data: function data() {
     return {
