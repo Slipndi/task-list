@@ -6,11 +6,12 @@
             <h2>
                 {{ title }} 
             </h2>
-            <PercentageBar :tasks="tasks" />
+            <PercentageBar :tasks="tasks" v-if="isMounted"/>
         </div>
         <div v-show="isVisible" class="relative">
         <ul class="inline-block content mt-2 w-full">
             <Task v-for="task in tasks" :key="task.id" :taskData="task" />
+
         </ul>
         </div>
     </div>
@@ -28,16 +29,20 @@ export default {
             categoryColor : this.category.color,
             isVisible : false,
             tasks:[],
+            isMounted:false,
         }
     },
     beforeMount() {
         this.getTasks();
-    }
-    ,
+    },
     methods :{
         getTasks(){
             axios.get(`tasks/${this.taskListId}`)
-                .then(response => this.tasks = response.data)
+                .then(response => { 
+                    this.tasks = response.data;
+                    this.isMounted=true
+                    }
+                )
         }
     }
 };

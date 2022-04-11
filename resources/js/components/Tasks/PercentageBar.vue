@@ -7,9 +7,23 @@
 <script>
 export default {
     props: ['tasks'],
+    created() {
+        this.updatePercentage()
+        console.log(this.tasks);
+    },
     data() {
         return {
-            percentage : (this.tasks.filter(task => task.is_done == true).length / this.tasks.length) * 100.00 , 
+            percentage :  0
+        }
+    },
+    watch: {
+        tasks(newTasks, oldTasks) {
+            this.updatePercentage()
+        }
+    },
+    methods : {
+        updatePercentage(){
+            this.percentage = (this.tasks.filter(task => task.is_done == true).length / this.tasks.length) * 100.00
         }
     }
 }

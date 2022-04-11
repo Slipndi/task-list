@@ -19443,7 +19443,8 @@ var __default__ = {
     return {
       categoryColor: this.category.color,
       isVisible: false,
-      tasks: []
+      tasks: [],
+      isMounted: false
     };
   },
   beforeMount: function beforeMount() {
@@ -19454,7 +19455,8 @@ var __default__ = {
       var _this = this;
 
       axios.get("tasks/".concat(this.taskListId)).then(function (response) {
-        return _this.tasks = response.data;
+        _this.tasks = response.data;
+        _this.isMounted = true;
       });
     }
   }
@@ -19492,12 +19494,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['tasks'],
+  created: function created() {
+    this.updatePercentage();
+    console.log(this.tasks);
+  },
   data: function data() {
     return {
-      percentage: this.tasks.filter(function (task) {
-        return task.is_done == true;
-      }).length / this.tasks.length * 100.00
+      percentage: 0
     };
+  },
+  watch: {
+    tasks: function tasks(newTasks, oldTasks) {
+      this.updatePercentage();
+    }
+  },
+  methods: {
+    updatePercentage: function updatePercentage() {
+      this.percentage = this.tasks.filter(function (task) {
+        return task.is_done == true;
+      }).length / this.tasks.length * 100.00;
+    }
   }
 });
 
@@ -19654,11 +19670,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* TEXT */
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.title), 1
   /* TEXT */
-  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_PercentageBar, {
+  ), $data.isMounted ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_PercentageBar, {
+    key: 0,
     tasks: $data.tasks
   }, null, 8
   /* PROPS */
-  , ["tasks"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_5, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.tasks, function (task) {
+  , ["tasks"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_5, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.tasks, function (task) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Task, {
       key: task.id,
       taskData: task
