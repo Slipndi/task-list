@@ -7,6 +7,7 @@
             :category="tasklist.category"
             :taskListId="tasklist.id"
         />
+        <AddCard />
     </div>
 </template>
 <script>

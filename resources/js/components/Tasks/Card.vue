@@ -1,7 +1,20 @@
 <template>
     <div class="overflow-hidden shadow-lg p-10 bark-background relative">
         <div class="header" @click="isVisible = !isVisible">
-            <div class="bookmark"> </div>
+            <div class="bookmark"> 
+                    <svg 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    class="h-10 w-10 icon ml-2" 
+                    fill="none" 
+                    viewBox="0 0 24 24" 
+                    stroke="currentColor" 
+                    stroke-width="2"
+                    id="deleteCard"
+                    @click="deleteCard()"
+                >
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </div>
             <div class="category">{{ category.title }} </div>
             <h2>
                 {{ title }} 
@@ -9,10 +22,10 @@
             <PercentageBar :tasks="tasks" v-if="isMounted"/>
         </div>
         <div v-show="isVisible" class="relative">
-        <ul class="inline-block content mt-2 w-full">
-            <Task v-for="task in tasks" :key="task.id" :taskData="task" />
-            <addTask :taskListId="taskListId" />
-        </ul>
+            <ul class="inline-block content mt-2 w-full">
+                <Task v-for="task in tasks" :key="task.id" :taskData="task" />
+                <addTask :taskListId="taskListId" />
+            </ul>
         </div>
     </div>
 </template>
@@ -43,6 +56,10 @@ export default {
                     this.isMounted=true
                     }
                 )
+        },
+        deleteCard() {
+            axios.delete(`task-lists/${this.taskListId}`);
+            this.$parent.getTaskLists();
         }
     }
 };
@@ -56,6 +73,18 @@ export default {
 }
 </style>
 <style scoped>
+#deleteCard {
+    position:absolute;
+    left:-50px;
+    top:10px;
+    cursor: pointer;
+}
+
+#deleteCard:hover {
+    color:red;
+}
+
+
 .add {
     cursor: pointer;
     bottom:-30%;
@@ -88,6 +117,5 @@ div {
 }
 .header {
     cursor: pointer;
-
 }
 </style>

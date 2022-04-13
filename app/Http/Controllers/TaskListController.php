@@ -83,8 +83,8 @@ class TaskListController extends Controller
      * @param  \App\Models\TaskList  $taskList
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TaskList $taskList)
+    public function destroy(int $id)
     {
-        //
+        TaskList::destroy($id);
     }
 }
