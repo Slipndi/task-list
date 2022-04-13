@@ -19,3 +19,7 @@
 .bark-background {
     background-color: var(--bark);
 }
+
+input:focus {
+    outline: none;
+}

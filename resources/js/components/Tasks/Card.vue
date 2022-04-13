@@ -11,7 +11,7 @@
         <div v-show="isVisible" class="relative">
         <ul class="inline-block content mt-2 w-full">
             <Task v-for="task in tasks" :key="task.id" :taskData="task" />
-
+            <addTask :taskListId="taskListId" />
         </ul>
         </div>
     </div>

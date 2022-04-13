@@ -23,10 +23,7 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-    }
+    public function create(){}
 
     /**
      * Store a newly created resource in storage.
@@ -34,9 +31,21 @@ class TaskController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request){
+        Validator::make(
+            $request->all(),
+            [
+                'title' => 'required|max:255',
+                'is_done' => 'required',
+                'task_lists_id' => 'required'
+            ]
+        )->validated();
+
+        Task::create([
+            'title' => $request->title,
+            'is_done'=>false,
+            'task_lists_id'=>$request->task_lists_id
+        ]);
     }
 
     /**

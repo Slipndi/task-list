@@ -9,13 +9,13 @@
             v-on:change="updateTask()"
 
         />    
-        <input 
+        <textarea 
             type="text" 
             v-model="title" 
             class="w-full" 
             @keyup.enter="updateTask()"
             v-bind:class="isDone == 1 ? 'checked' : '' "
-        />
+        ></textarea>
         <svg 
             xmlns="http://www.w3.org/2000/svg" 
             class="h-10 w-10 icon ml-2" 
@@ -62,7 +62,7 @@ export default {
         text-decoration: line-through;
     }
 
-    input[type="text"] {
+    input[type="text"], textarea {
         background: none;
         border: none;
         height:fit-content;
@@ -71,6 +71,7 @@ export default {
         content: attr(data-replicated-value) " ";
         height: auto;
     }
+
     .icon {
         cursor: pointer;
     }
