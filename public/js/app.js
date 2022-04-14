@@ -19441,8 +19441,34 @@ var __default__ = {
   data: function data() {
     return {
       isVisible: false,
-      title: ''
+      title: "",
+      categories: [],
+      selected: 'non'
     };
+  },
+  beforeMount: function beforeMount() {
+    this.getCategory();
+  },
+  methods: {
+    getCategory: function getCategory() {
+      var _this = this;
+
+      axios.get("/categories").then(function (response) {
+        _this.categories = response.data;
+      });
+    },
+    insertNewTaskList: function insertNewTaskList() {
+      if (this.selected != 'non') {
+        axios.post("/task-lists", {
+          category_id: this.selected,
+          title: this.title
+        });
+        this.select = '';
+        this.title = '';
+        this.isVisible = false;
+        this.$parent.getTaskLists();
+      }
+    }
   }
 };
 
@@ -19717,7 +19743,7 @@ var _withScopeId = function _withScopeId(n) {
 };
 
 var _hoisted_1 = {
-  "class": "overflow-hidden shadow-lg p-10 flex flex-col justify-center items-center hover:bg-slate-900"
+  "class": "overflow-hidden shadow-lg p-10 flex flex-col justify-center items-center bark-background"
 };
 
 var _hoisted_2 = /*#__PURE__*/_withScopeId(function () {
@@ -19754,37 +19780,28 @@ var _hoisted_5 = /*#__PURE__*/_withScopeId(function () {
 var _hoisted_6 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "for": "categories",
-    "class": "mt-2"
+    "class": "mt-3"
   }, " Catégories ", -1
   /* HOISTED */
   );
 });
 
 var _hoisted_7 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
-    "class": "mt-2",
-    name: "categories",
-    id: "categories"
-  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", null, "Choix1"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", null, "Choix2")], -1
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+    value: "non",
+    selected: ""
+  }, " Veuillez choisir une catégorie ", -1
   /* HOISTED */
   );
 });
 
-var _hoisted_8 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-    type: "submit",
-    "class": "mt-3"
-  }, "Créer", -1
-  /* HOISTED */
-  );
-});
-
+var _hoisted_8 = ["value"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("header", {
     onClick: _cache[0] || (_cache[0] = function ($event) {
       return $data.isVisible = !$data.isVisible;
     })
-  }, _hoisted_3), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("main", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_4, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }, _hoisted_3), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("main", _hoisted_4, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "text",
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
       return $data.title = $event;
@@ -19793,7 +19810,31 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     name: "title"
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.title]]), _hoisted_6, _hoisted_7, _hoisted_8])], 512
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.title]]), _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+    "class": "mt-2",
+    name: "category_id",
+    id: "categories",
+    "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+      return $data.selected = $event;
+    })
+  }, [_hoisted_7, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.categories, function (category) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
+      key: category.id,
+      value: category.id
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(category.title), 9
+    /* TEXT, PROPS */
+    , _hoisted_8);
+  }), 128
+  /* KEYED_FRAGMENT */
+  ))], 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.selected]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    type: "button",
+    "class": "mt-5",
+    onClick: _cache[3] || (_cache[3] = function ($event) {
+      return $options.insertNewTaskList();
+    })
+  }, "Créer")], 512
   /* NEED_PATCH */
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.isVisible]])]);
 }
@@ -20141,7 +20182,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\ninput[type=\"text\"] {\n    background: none;\n    border: none;\n    border-bottom: 1px solid white;\n    height: -webkit-fit-content;\n    height: -moz-fit-content;\n    height: fit-content;\n    font-size: 16px;\n    font-weight: 200;\n    content: attr(data-replicated-value) \" \";\n    height: auto;\n}\n.category {\n    color: var(--GoldenRod);\n}\n.relative {\n    position: relative;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\ninput[type=\"text\"],\nselect {\n    background: none;\n    border: none;\n    border-bottom: 1px solid white;\n    height: -webkit-fit-content;\n    height: -moz-fit-content;\n    height: fit-content;\n    font-size: 16px;\n    font-weight: 200;\n    content: attr(data-replicated-value) \" \";\n    height: auto;\n}\n.category {\n    color: var(--GoldenRod);\n}\n.relative {\n    position: relative;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

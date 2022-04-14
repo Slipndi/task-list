@@ -1,5 +1,7 @@
 <template>
-    <div class="overflow-hidden shadow-lg p-10 flex flex-col justify-center items-center hover:bg-slate-900">
+    <div
+        class="overflow-hidden shadow-lg p-10 flex flex-col justify-center items-center bark-background"
+    >
         <header @click="isVisible = !isVisible">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -16,34 +18,69 @@
                 />
             </svg>
         </header>
-        <main v-show="isVisible" >
-            <form class="flex flex-col">
+        <main v-show="isVisible" class="flex flex-col"> 
+
                 <label for="title" class="mt-2"> Titre </label>
-                <input type="text" v-model="title" id="title" name="title"/>
-                
-                <label for="categories" class="mt-2"> Catégories </label>
-                <select class="mt-2" name="categories" id="categories">
-                    <option>Choix1</option>
-                    <option>Choix2</option>
+                <input type="text" v-model="title" id="title" name="title" />
+                <label for="categories" class="mt-3"> Catégories </label>
+                <select
+                    class="mt-2"
+                    name="category_id"
+                    id="categories"
+                    v-model="selected"
+                >
+                    <option value="non" selected> Veuillez choisir une catégorie </option>
+                    <option
+                        v-for="category in categories"
+                        :key="category.id"
+                        :value="category.id"
+                    >
+                        {{ category.title }}
+                    </option>
                 </select>
-                <button type="submit" class="mt-3">Créer</button>
-            </form>
+                <button type="button" class="mt-5" @click="insertNewTaskList()">Créer</button>
         </main>
     </div>
 </template>
 
 <script>
 export default {
-    data(){
+    data() {
         return {
             isVisible: false,
-            title:''
+            title: "",
+            categories: [],
+            selected:'non',
+        };
+    },
+    beforeMount() {
+        this.getCategory();
+    },
+    methods: {
+        getCategory() {
+            axios.get("/categories").then((response) => {
+                this.categories = response.data;
+            });
+        },
+
+        insertNewTaskList(){
+            if(this.selected != 'non') {
+                axios.post("/task-lists", {
+                    category_id:this.selected,
+                    title:this.title,
+                });
+                this.select = '';
+                this.title = '';
+                this.isVisible = false;
+                this.$parent.getTaskLists();
+            }
         }
-    }
-}     
+    },
+};
 </script>
 <style>
-input[type="text"] {
+input[type="text"],
+select {
     background: none;
     border: none;
     border-bottom: 1px solid white;
@@ -61,6 +98,7 @@ input[type="text"] {
 }
 </style>
 <style scoped>
+
 #deleteCard {
     position: absolute;
     left: -50px;

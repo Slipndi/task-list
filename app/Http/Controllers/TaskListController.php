@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TaskList;
 use Illuminate\Http\{Request,Response};
+use Illuminate\Support\Facades\Validator;
 
 class TaskListController extends Controller
 {
@@ -40,7 +41,19 @@ class TaskListController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Validator::make(
+            $request->all(),
+            [
+                'title' => 'required|max:255',
+                'category_id' => 'required',
+            ]
+        )->validated();
+
+        TaskList::create([
+            'title' => $request->title,
+            'is_active'=> true,
+            'category_id' => $request->category_id
+        ]);
     }
 
     /**
