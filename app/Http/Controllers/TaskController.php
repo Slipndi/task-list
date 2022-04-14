@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Validator;
 
 class TaskController extends Controller
 {
@@ -13,8 +15,7 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index() {
     }
 
     /**
@@ -22,10 +23,7 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-    }
+    public function create(){}
 
     /**
      * Store a newly created resource in storage.
@@ -33,20 +31,36 @@ class TaskController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request){
+        Validator::make(
+            $request->all(),
+            [
+                'title' => 'required|max:255',
+                'is_done' => 'required',
+                'task_lists_id' => 'required'
+            ]
+        )->validated();
+
+        Task::create([
+            'title' => $request->title,
+            'is_done'=>false,
+            'task_lists_id'=>$request->task_lists_id
+        ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Task  $task
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Task $task)
-    {
-        //
+    public function show(int $id) {
+        return Response(
+            Task::where('task_lists_id', $id)
+                ->get()
+                ->jsonSerialize(), 
+                Response::HTTP_OK
+        );
     }
 
     /**
@@ -67,9 +81,19 @@ class TaskController extends Controller
      * @param  \App\Models\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Task $task)
-    {
-        //
+    public function update(Request $request, int $id){
+        Validator::make(
+            $request->all(),
+            [
+                'title' => 'required|max:255',
+                'is_done' => 'required'
+            ]
+        )->validated();
+
+        $task = Task::find($id);
+        $task->title = $request->title;
+        $task->is_done = $request->is_done;
+        $task->save();
     }
 
     /**
@@ -78,8 +102,7 @@ class TaskController extends Controller
      * @param  \App\Models\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Task $task)
-    {
-        //
+    public function destroy(int $id) {
+        Task::destroy($id);
     }
 }

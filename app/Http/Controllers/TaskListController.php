@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TaskList;
 use Illuminate\Http\{Request,Response};
+use Illuminate\Support\Facades\Validator;
 
 class TaskListController extends Controller
 {
@@ -14,7 +15,12 @@ class TaskListController extends Controller
      */
     public function index()
     {
-        return Response(TaskList::all()->jsonSerialize(), Response::HTTP_OK);
+        return Response(
+            TaskList::with('category')
+                ->get()
+                ->jsonSerialize(), 
+                Response::HTTP_OK)
+            ;
     }
 
     /**
@@ -35,7 +41,19 @@ class TaskListController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Validator::make(
+            $request->all(),
+            [
+                'title' => 'required|max:255',
+                'category_id' => 'required',
+            ]
+        )->validated();
+
+        TaskList::create([
+            'title' => $request->title,
+            'is_active'=> true,
+            'category_id' => $request->category_id
+        ]);
     }
 
     /**
@@ -78,8 +96,8 @@ class TaskListController extends Controller
      * @param  \App\Models\TaskList  $taskList
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TaskList $taskList)
+    public function destroy(int $id)
     {
-        //
+        TaskList::destroy($id);
     }
 }

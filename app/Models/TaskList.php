@@ -28,7 +28,7 @@ class TaskList extends Model
      * @return HasOne
      */
     public function category() : HasOne {
-        return $this->hasOne(Category::class);
+        return $this->hasOne(Category::class, "id", "category_id");
     }
 
     /**
@@ -37,6 +37,6 @@ class TaskList extends Model
      * @return HasMany
      */
     public function tasks() : HasMany {
-        return $this->hasMany(Task::class);
+        return $this->hasMany(Task::class, 'task_lists_id', 'id');
     }
 }

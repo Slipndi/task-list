@@ -26,6 +26,6 @@ class Category extends Model
      * @return HasMany
      */
     public function taskList() : HasMany {
-        return $this->hasMany(TaskList::class);
+        return $this->hasMany(TaskList::class, "category_id", "id");
     }
 }

@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+
+:root {
+    --seawed-green: #1E656D;
+    --bark: #00293C;
+    --white: #ffffff;
+    --GoldenRod:#B8F0A4;
+}
+
+#app {
+    background-color: var(--seawed-green);
+    font-family: 'Roboto', sans-serif;
+}
+
+.bark-background {
+    background-color: var(--bark);
+}
+
+input:focus {
+    outline: none;
+}
