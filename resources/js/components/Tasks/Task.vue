@@ -41,16 +41,16 @@ export default {
         }
     },
     methods :{
-        updateTask(){
-            axios.put(`tasks/${this.id}`, { 
+        async updateTask(){
+            await axios.put(`tasks/${this.id}`, { 
                 'title': this.title,
                 'is_done':this.isDone
             })
             this.$parent.getTasks();
         },
 
-        deleteTask(){
-            axios.delete(`tasks/${this.id}`);
+        async deleteTask(){
+            await axios.delete(`tasks/${this.id}`);
             this.$parent.getTasks();
         },
     }
