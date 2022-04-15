@@ -16,12 +16,12 @@ export default {
         }
     },
     watch: {
-        tasks(newTasks, oldTasks) {
-            this.updatePercentage()
+        async tasks(newTasks, oldTasks) {
+            return this.updatePercentage()
         }
     },
     methods : {
-        updatePercentage(){
+        async updatePercentage(){
             this.percentage = (this.tasks.filter(task => task.is_done == true).length / this.tasks.length) * 100.00
         }
     }
