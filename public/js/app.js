@@ -19638,6 +19638,7 @@ var __default__ = {
     this.getTasks();
   },
   methods: {
+    //Récupération des tâches
     getTasks: function getTasks() {
       var _this = this;
 
@@ -19660,6 +19661,7 @@ var __default__ = {
         }, _callee);
       }))();
     },
+    //Suppression d'une card
     deleteCard: function deleteCard() {
       var _this2 = this;
 
@@ -19668,7 +19670,9 @@ var __default__ = {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _this2.isVisible = true;
+                // On évite l'ouverture intempestive de la card
+                _this2.isVisible = true; //on attends que la tâche soit réalisée pour mettre à jour le parent
+
                 _context2.next = 3;
                 return axios["delete"]("task-lists/".concat(_this2.taskListId));
 
