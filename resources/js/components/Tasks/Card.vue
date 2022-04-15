@@ -49,6 +49,7 @@ export default {
         this.getTasks();
     },
     methods :{
+        //Récupération des tâches
         async getTasks(){
             await axios.get(`tasks/${this.taskListId}`)
                 .then(response => { 
@@ -57,8 +58,11 @@ export default {
                     }
                 )
         },
+        //Suppression d'une card
         async deleteCard() {
+            // On évite l'ouverture intempestive de la card
             this.isVisible=true;
+            //on attends que la tâche soit réalisée pour mettre à jour le parent
             await axios.delete(`task-lists/${this.taskListId}`);
             this.$parent.getTaskLists();
         }
