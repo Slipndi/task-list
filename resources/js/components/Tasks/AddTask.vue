@@ -7,6 +7,8 @@
             viewBox="0 0 24 24"
             stroke="currentColor"
             stroke-width="2"
+            @click="createTask()"
+            id="addIcon"
         >
             <path
                 stroke-linecap="round"
@@ -57,5 +59,8 @@ input[type="text"] {
     font-weight: 200;
     content: attr(data-replicated-value) " ";
     height: auto;
+}
+#addIcon {
+    cursor: pointer;
 }
 </style>
