@@ -18,8 +18,8 @@ export default {
         };
     },
     methods : {
-        getTaskLists () {
-            fetch("/task-lists")
+        async getTaskLists () {
+            await fetch("/task-lists")
             .then(res => res.json())
             .then(data => this.taskLists = data)
             .catch(err => console.log(error));
