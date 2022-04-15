@@ -34,9 +34,9 @@ export default {
         };
     },
     methods: {
-        createTask() {
+        async createTask() {
             if (this.title.length >= 3) {
-                axios.post(`tasks`, {
+                await axios.post(`tasks`, {
                     title: this.title,
                     is_done: false,
                     task_lists_id: this.taskListId,
