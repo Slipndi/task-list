@@ -49,16 +49,17 @@ export default {
         this.getTasks();
     },
     methods :{
-        getTasks(){
-            axios.get(`tasks/${this.taskListId}`)
+        async getTasks(){
+            await axios.get(`tasks/${this.taskListId}`)
                 .then(response => { 
                     this.tasks = response.data;
                     this.isMounted=true
                     }
                 )
         },
-        deleteCard() {
-            axios.delete(`task-lists/${this.taskListId}`);
+        async deleteCard() {
+            this.isVisible=true;
+            await axios.delete(`task-lists/${this.taskListId}`);
             this.$parent.getTaskLists();
         }
     }

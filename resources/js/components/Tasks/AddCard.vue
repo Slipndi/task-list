@@ -57,15 +57,15 @@ export default {
         this.getCategory();
     },
     methods: {
-        getCategory() {
-            axios.get("/categories").then((response) => {
+        async getCategory() {
+            await axios.get("/categories").then((response) => {
                 this.categories = response.data;
             });
         },
 
-        insertNewTaskList(){
+        async insertNewTaskList(){
             if(this.selected != 'non') {
-                axios.post("/task-lists", {
+                await axios.post("/task-lists", {
                     category_id:this.selected,
                     title:this.title,
                 });
